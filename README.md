@@ -33,12 +33,12 @@ npm install safe-router
 
 Now, add the following to your `tsconfig.json`:
 
-```json
+```jsonc
 {
   "compilerOptions": {
-    ...
+    // ...
     "plugins": [
-      ...
+      // ...
       {
         "name": "safe-router",
         "appFolder": "app" // (optional)
