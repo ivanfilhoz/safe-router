@@ -75,11 +75,12 @@ Use the exported `routes` object to access your routes:
 import { routes } from './routes.generated'
 
 routes.get() // /
+routes.api.get() // /api
+routes.api.params('hello', 'world') // /api/hello/world
 routes.products.get() // /products
 routes.products.id('123').get() // /products/123
 routes.products.id('123').details.get() // /products/123/details
-routes.api.get() // /api
-routes.api.params('hello', 'world') // /api/hello/world
+routes.settings.get() // /settings
 ```
 
 ## License
