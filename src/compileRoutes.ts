@@ -4,7 +4,7 @@ import { getRealUrlFromPath } from './getRealUrlFromPath'
 import { getVariableNameFromPath } from './getVariableNameFromPath'
 import { indent } from './indent'
 
-export function compileTree(tree: Tree, path: Path = []) {
+export function compileRoutes(tree: Tree, path: Path = []) {
 	let result = ''
 
 	const node = getNodeFromPath(tree, path)
@@ -32,7 +32,7 @@ export function compileTree(tree: Tree, path: Path = []) {
 	const { _, ...children } = node
 	for (const key in children) {
 		const nodeType = (children[key] as Tree)?._ as NodeType
-		const childTree = compileTree(tree, [...path, [key, nodeType]])
+		const childTree = compileRoutes(tree, [...path, [key, nodeType]])
 		result += indent(`\n${key}: ${childTree},`)
 	}
 

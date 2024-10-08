@@ -9,6 +9,7 @@
 ## Features
 
 - ✅ 100% type-safe
+- ✅ Easy setup, no migration needed
 - ✅ Runs as a language service plugin
 - ✅ Watches for changes in the app directory
 - ✅ Supports dynamic and catch-all routes
@@ -27,6 +28,7 @@
 ## Setup
 
 Install the package from the [npm registry](https://www.npmjs.com/package/safe-router):
+
 ```bash
 npm install safe-router
 ```
@@ -53,14 +55,14 @@ Now, add the following to your `tsconfig.json`:
 
 Given the following directory structure:
 
-```
+```plaintext
 app/
 ├── api/
 │   ├── [[...params]]/
 │   │   └── route.ts
 ├── products/
 │   ├── [id]/
-│   │   ├── details
+│   │   ├── details/
 │   │   │   └── page.tsx
 │   │   └── page.tsx
 │   └── page.tsx
@@ -69,8 +71,8 @@ app/
 └── page.tsx
 ```
 
+Use the exported `routes` object to access your routes throughout your app:
 
-Use the exported `routes` object to access your routes:
 ```ts
 import { routes } from './routes.generated'
 
@@ -81,6 +83,20 @@ routes.products.get() // /products
 routes.products.id('123').get() // /products/123
 routes.products.id('123').details.get() // /products/123/details
 routes.settings.get() // /settings
+```
+
+In your page files, use the exported `RouteParams` type to get typed route parameters:
+
+```tsx
+import type { RouteParams } from './routes.generated'
+
+type Props = {
+  params: RouteParams['product.id.details']
+}
+
+export default function ProductDetailsPage({ params }: Props) {
+  return <div>Details for product {params.id}</div>
+}
 ```
 
 ## License

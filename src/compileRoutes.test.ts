@@ -1,12 +1,13 @@
-import { compileTree } from './compileTree'
+import { compileRoutes } from './compileRoutes'
+import { exampleTree } from './mocks/tree'
 
-describe('compileTree', () => {
+describe('compileRoutes', () => {
 	test('should compile a static root tree', () => {
 		const tree: Tree = {
 			_: 'static',
 		}
 
-		const result = compileTree(tree)
+		const result = compileRoutes(tree)
 		expect(result).toEqual(
 			`{
   /**
@@ -18,37 +19,7 @@ describe('compileTree', () => {
 	})
 
 	test('should compile the example tree', () => {
-		const tree: Tree = {
-			_: 'static',
-			about: {
-				_: 'static',
-			},
-			products: {
-				_: 'static',
-				summary: {
-					_: 'static',
-				},
-				id: {
-					_: 'dynamic',
-					details: {
-						_: 'static',
-					},
-				},
-			},
-			hello: {
-				params: {
-					_: 'catchAll',
-				},
-			},
-			api: {
-				_: 'static',
-				apiRoute: {
-					_: 'catchAll',
-				},
-			},
-		}
-
-		const result = compileTree(tree)
+		const result = compileRoutes(exampleTree)
 		expect(result).toEqual(
 			`{
   /**

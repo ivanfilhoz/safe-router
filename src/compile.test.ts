@@ -2,7 +2,6 @@ import mock from 'mock-fs'
 import { exampleFs } from './mocks/fs'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-import * as ts from 'typescript'
 import { compile } from './compile'
 
 describe('compile', () => {
@@ -20,22 +19,11 @@ describe('compile', () => {
 
 		mock.restore()
 
-		const transpiled = ts.transpileModule(generated, {
-			compilerOptions: {
-				module: ts.ModuleKind.CommonJS,
-				target: ts.ScriptTarget.ES5,
-				strict: true,
-			},
-		})
-
-		const js = transpiled.outputText
-		const jsFilePath = path.join(__dirname, '..', 'generated', 'routes.js')
-
-		fs.mkdirSync(path.dirname(jsFilePath), { recursive: true })
-		fs.writeFileSync(jsFilePath, js, 'utf8')
-
-		delete require.cache[jsFilePath]
-		const { routes } = require(jsFilePath)
+		const outputPath = path.join(__dirname, '..', 'generated', 'routes.ts')
+		fs.mkdirSync(path.dirname(outputPath), { recursive: true })
+		fs.writeFileSync(outputPath, generated, 'utf-8')
+		delete require.cache[outputPath]
+		const { routes } = require(outputPath)
 
 		expect(routes.get()).toEqual('/')
 		expect(routes.about.get()).toEqual('/about')
