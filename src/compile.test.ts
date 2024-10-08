@@ -20,15 +20,18 @@ describe('compile', () => {
 
 		mock.restore()
 
-		const js = ts.transpileModule(generated, {
+		const transpiled = ts.transpileModule(generated, {
 			compilerOptions: {
 				module: ts.ModuleKind.CommonJS,
 				target: ts.ScriptTarget.ES5,
 				strict: true,
 			},
-		}).outputText
+		})
+
+		const js = transpiled.outputText
 		const jsFilePath = path.join(__dirname, '..', 'generated', 'routes.js')
 
+		fs.mkdirSync(path.dirname(jsFilePath), { recursive: true })
 		fs.writeFileSync(jsFilePath, js, 'utf8')
 
 		delete require.cache[jsFilePath]
