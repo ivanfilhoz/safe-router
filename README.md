@@ -56,10 +56,10 @@ Given the following directory structure:
 ```
 app/
 ├── api/
-│   ├── [[...params]]
+│   ├── [[...params]]/
 │   │   └── route.ts
 ├── products/
-│   ├── [id]
+│   ├── [id]/
 │   │   ├── details
 │   │   │   └── page.tsx
 │   │   └── page.tsx
