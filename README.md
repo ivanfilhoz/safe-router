@@ -55,16 +55,16 @@ Given the following directory structure:
 
 ```
 app/
-├── api
+├── api/
 │   ├── [[...params]]
 │   │   └── route.ts
-├── products
+├── products/
 │   ├── [id]
 │   │   ├── details
 │   │   │   └── page.tsx
 │   │   └── page.tsx
 │   └── page.tsx
-├── settings
+├── settings/
 │   └── page.tsx
 └── page.tsx
 ```
@@ -76,7 +76,7 @@ import { routes } from './routes.generated'
 
 routes.get() // /
 routes.api.get() // /api
-routes.api.params('hello', 'world') // /api/hello/world
+routes.api.params('hello', 'world').get() // /api/hello/world
 routes.products.get() // /products
 routes.products.id('123').get() // /products/123
 routes.products.id('123').details.get() // /products/123/details

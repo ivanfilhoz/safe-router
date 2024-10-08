@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 coverage
+generated
 
 # Editor directories and files
 .idea

@@ -6,4 +6,5 @@ module.exports = {
 	testMatch: ['**/*.test.ts'],
 	collectCoverage: true,
 	collectCoverageFrom: ['src/**/*.ts'],
+	watchPathIgnorePatterns: ['/generated/.*/'],
 } satisfies Config
