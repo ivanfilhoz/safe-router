@@ -7,7 +7,8 @@
     "lint": "biome lint",
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "jest --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "coverage": "jest --coverage"
   },
   "devDependencies": {
