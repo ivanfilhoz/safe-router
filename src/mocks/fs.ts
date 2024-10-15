@@ -16,7 +16,11 @@ export const exampleFs: DirectoryItems = {
 		'[id]': {
 			'page.tsx': '',
 			details: {
-				'page.tsx': '',
+				'page.tsx': `
+export type SearchParams = {
+  tab?: string
+}				
+`,
 			},
 		},
 	},

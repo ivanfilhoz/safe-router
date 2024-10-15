@@ -4,7 +4,7 @@ import { exampleTree } from './mocks/tree'
 describe('compileRoutes', () => {
 	test('should compile a static root tree', () => {
 		const tree: Tree = {
-			_: 'static',
+			__type: 'static',
 		}
 
 		const result = compileRoutes(tree)
@@ -13,7 +13,7 @@ describe('compileRoutes', () => {
   /**
    * @returns /
    */
-  get: () => '/',
+  get: buildRoute('/'),
 }`,
 		)
 	})
@@ -25,34 +25,34 @@ describe('compileRoutes', () => {
   /**
    * @returns /
    */
-  get: () => '/',
+  get: buildRoute('/'),
   about: {
     /**
      * @returns /about
      */
-    get: () => '/about',
+    get: buildRoute('/about'),
   },
   products: {
     /**
      * @returns /products
      */
-    get: () => '/products',
+    get: buildRoute('/products'),
     summary: {
       /**
        * @returns /products/summary
        */
-      get: () => '/products/summary',
+      get: buildRoute('/products/summary'),
     },
     id: (products_id: string) => ({
       /**
        * @returns /products/{id}
        */
-      get: () => \`/products/\${products_id}\`,
+      get: buildRoute(\`/products/\${products_id}\`),
       details: {
         /**
          * @returns /products/{id}/details
          */
-        get: () => \`/products/\${products_id}/details\`,
+        get: buildRoute<{ tab: string }>(\`/products/\${products_id}/details\`),
       },
     }),
   },
@@ -61,19 +61,19 @@ describe('compileRoutes', () => {
       /**
        * @returns /hello/{params[0]}/{params[1]}/...
        */
-      get: () => \`/hello/\${hello_params.join('/')}\`,
+      get: buildRoute(\`/hello/\${hello_params.join('/')}\`),
     }),
   },
   api: {
     /**
      * @returns /api
      */
-    get: () => '/api',
+    get: buildRoute('/api'),
     apiRoute: (...api_apiRoute: string[]) => ({
       /**
        * @returns /api/{apiRoute[0]}/{apiRoute[1]}/...
        */
-      get: () => \`/api/\${api_apiRoute.join('/')}\`,
+      get: buildRoute(\`/api/\${api_apiRoute.join('/')}\`),
     }),
   },
 }`,

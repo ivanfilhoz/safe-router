@@ -4,7 +4,7 @@ import { exampleTree } from './mocks/tree'
 describe('compileParams', () => {
 	test('should compile a static root tree', () => {
 		const tree: Tree = {
-			_: 'static',
+			__type: 'static',
 		}
 
 		const result = compileParams(tree)
@@ -25,7 +25,6 @@ describe('compileParams', () => {
   'products.summary': {}
   'products.id': { id: string }
   'products.id.details': { id: string }
-  'hello': {}
   'hello.params': { params: string[] }
   'api': {}
   'api.apiRoute': { apiRoute: string[] }

@@ -1,10 +1,10 @@
-import { buildTree } from './buildTree'
 import mock from 'mock-fs'
+import { buildTree } from './buildTree'
 import { exampleFs } from './mocks/fs'
+import { exampleTree } from './mocks/tree'
 
 describe('buildTree', () => {
 	afterEach(() => {
-		// Restore the real file system after each test
 		mock.restore()
 	})
 
@@ -37,34 +37,6 @@ describe('buildTree', () => {
 		})
 
 		const result = buildTree('/app')
-		expect(result).toEqual({
-			_: 'static',
-			about: {
-				_: 'static',
-			},
-			products: {
-				_: 'static',
-				summary: {
-					_: 'static',
-				},
-				id: {
-					_: 'dynamic',
-					details: {
-						_: 'static',
-					},
-				},
-			},
-			hello: {
-				params: {
-					_: 'catchAll',
-				},
-			},
-			api: {
-				_: 'static',
-				apiRoute: {
-					_: 'catchAll',
-				},
-			},
-		})
+		expect(result).toEqual(exampleTree)
 	})
 })

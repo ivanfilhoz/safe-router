@@ -23,7 +23,7 @@ function init(modules: {
 		console.log('Routes file will be generated at', routesFilePath)
 
 		// Generate the initial routes file
-		generate(appDir, routesFilePath)
+		generate(info, appDir, routesFilePath)
 
 		// Watch the app directory for changes using chokidar
 		const watcher = chokidar.watch(appDir, {
@@ -41,7 +41,7 @@ function init(modules: {
 
 		function fileChanged(filePath: string) {
 			if (filePath.endsWith('.tsx') || filePath.endsWith('.ts')) {
-				generate(appDir, routesFilePath)
+				generate(info, appDir, routesFilePath)
 			}
 		}
 

@@ -1,3 +1,4 @@
+import { getChildrenFromTree } from './getChildrenFromTree'
 import { getDocUrlFromPath } from './getDocUrlFromPath'
 import { getNodeFromPath } from './getNodeFromPath'
 import { getRealUrlFromPath } from './getRealUrlFromPath'
@@ -9,38 +10,40 @@ export function compileRoutes(tree: Tree, path: Path = []) {
 
 	const node = getNodeFromPath(tree, path)
 
-	if (!node._ || node._ === 'static') {
+	if (!node.__type || node.__type === 'static') {
 		result += '{'
 	}
 
-	if (node._ === 'dynamic') {
+	if (node.__type === 'dynamic') {
 		result += `(${getVariableNameFromPath(path)}: string) => ({`
 	}
 
-	if (node._ === 'catchAll') {
+	if (node.__type === 'catchAll') {
 		result += `(...${getVariableNameFromPath(path)}: string[]) => ({`
 	}
 
-	if (node._) {
+	if (node.__type) {
 		result += `
   /**
    * @returns ${getDocUrlFromPath(path)}
    */
-  get: () => ${getRealUrlFromPath(path)},`
+  get: buildRoute(${getRealUrlFromPath(path)}),`
 	}
 
-	const { _, ...children } = node
+	const children = getChildrenFromTree(node)
 	for (const key in children) {
-		const nodeType = (children[key] as Tree)?._ as NodeType
-		const childTree = compileRoutes(tree, [...path, [key, nodeType]])
+		const childTree = compileRoutes(tree, [
+			...path,
+			[key, children[key].__type],
+		])
 		result += indent(`\n${key}: ${childTree},`)
 	}
 
-	if (!node._ || node._ === 'static') {
+	if (!node.__type || node.__type === 'static') {
 		result += '\n}'
 	}
 
-	if (node._ === 'dynamic' || node._ === 'catchAll') {
+	if (node.__type === 'dynamic' || node.__type === 'catchAll') {
 		result += '\n})'
 	}
 

@@ -1,29 +1,35 @@
 export const exampleTree: Tree = {
-	_: 'static',
+	__type: 'static',
 	about: {
-		_: 'static',
+		__type: 'static',
 	},
 	products: {
-		_: 'static',
+		__type: 'static',
 		summary: {
-			_: 'static',
+			__type: 'static',
 		},
 		id: {
-			_: 'dynamic',
+			__type: 'dynamic',
 			details: {
-				_: 'static',
+				__type: 'static',
+				__searchParams: {
+					tab: {
+						type: 'string',
+						optional: true,
+					},
+				},
 			},
 		},
 	},
 	hello: {
 		params: {
-			_: 'catchAll',
+			__type: 'catchAll',
 		},
 	},
 	api: {
-		_: 'static',
+		__type: 'static',
 		apiRoute: {
-			_: 'catchAll',
+			__type: 'catchAll',
 		},
 	},
 }

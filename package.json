@@ -3,6 +3,9 @@
   "description": "⚡️ Type-safe routing for Next.js",
   "version": "0.2.0",
   "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "biome lint",
     "build": "tsc",

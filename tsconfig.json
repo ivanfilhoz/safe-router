@@ -10,7 +10,10 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "types": ["jest", "node"],
+    "paths": {
+      "safe-router/helpers": ["./src/helpers"]
+    },
   },
-  "include": ["src"],
+  "include": ["src", "generated"],
   "exclude": ["node_modules", "dist"]
 }

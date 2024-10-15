@@ -1,3 +1,4 @@
+import { getChildrenFromTree } from './getChildrenFromTree'
 import { getNodeFromPath } from './getNodeFromPath'
 import { getParamsFromPath } from './getParamsFromPath'
 import { indent } from './indent'
@@ -9,23 +10,24 @@ export function compileParams(tree: Tree) {
 	const compileSubTree = (path: Path) => {
 		let res = ''
 
-		const fullKey = path.map(([name]) => name).join('.')
-		const params = getParamsFromPath(path)
-		res += `\n  '${fullKey}': ${params}`
-
 		const node = getNodeFromPath(tree, path)
-		const { _, ...children } = node
+
+		if (node.__type) {
+			const fullKey = path.map(([name]) => name).join('.')
+			const params = getParamsFromPath(path)
+			res += `\n  '${fullKey}': ${params}`
+		}
+
+		const children = getChildrenFromTree(node)
 		for (const key in children) {
-			const nodeType = (children[key] as Tree)?._ as NodeType
-			res += compileSubTree([...path, [key, nodeType]])
+			res += compileSubTree([...path, [key, children[key].__type]])
 		}
 		return res
 	}
 
-	const { _, ...children } = tree
+	const children = getChildrenFromTree(tree)
 	for (const key in children) {
-		const nodeType = (children[key] as Tree)?._ as NodeType
-		result += compileSubTree([[key, nodeType]])
+		result += compileSubTree([[key, children[key].__type]])
 	}
 
 	result += '\n}'
