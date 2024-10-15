@@ -31,6 +31,29 @@ describe('buildTree', () => {
 		expect(result).toEqual({})
 	})
 
+	test('should support group routes', () => {
+		mock({
+			'/app': {
+				'(home)': {
+					'page.tsx': '',
+				},
+				'(staff)': {
+					products: {
+						'page.tsx': '',
+					},
+				},
+			},
+		})
+
+		const result = buildTree('/app')
+		expect(result).toEqual({
+			_: 'static',
+			products: {
+				_: 'static',
+			},
+		})
+	})
+
 	test('should match example tree', () => {
 		mock({
 			'/app': exampleFs,

@@ -1,7 +1,7 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 
-export function buildTree(dir: string, type: NodeType = 'static'): Tree {
+export function buildTree(dir: string, _type: NodeType = 'static'): Tree {
 	const entries = fs.readdirSync(dir, { withFileTypes: true })
 	const tree = {} as Tree
 
@@ -10,12 +10,19 @@ export function buildTree(dir: string, type: NodeType = 'static'): Tree {
 			entry.isFile() &&
 			(entry.name === 'page.tsx' || entry.name === 'route.ts')
 		) {
-			tree._ = type
+			tree._ = _type
 		}
 
 		if (entry.isDirectory()) {
 			const segment = entry.name
 			const entryPath = path.join(dir, segment)
+
+			const groupMatch = segment.match(/^\((.+)\)$/)
+
+			if (groupMatch) {
+				Object.assign(tree, buildTree(entryPath, _type))
+				continue
+			}
 
 			let type: NodeType = 'static'
 			let name: string = segment
