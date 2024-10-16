@@ -16,7 +16,8 @@ import { buildRoute } from 'safe-router/helpers'
 
 export const routes = ${compiledRoutes}
 
-export type RouteParams = ${compiledParams}`
+export type RouteParams = ${compiledParams}
+`
 
 	return fileContent
 }

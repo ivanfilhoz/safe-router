@@ -8,6 +8,7 @@ export const buildRoute =
 		if (searchParams) {
 			const params = Object.entries(searchParams).reduce(
 				(acc, [key, value]) => {
+					if (value === undefined) return acc
 					const values = typeof value === 'string' ? [value] : value
 					values.forEach((value) => acc.append(key, value))
 					return acc

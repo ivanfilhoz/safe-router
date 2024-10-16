@@ -3,7 +3,9 @@ type InvalidType<K extends PropertyKey> = {
 }
 
 type EnforceStringProperties<T> = {
-	[K in keyof T]: T[K] extends string | string[] ? T[K] : InvalidType<K>
+	[K in keyof T]: T[K] extends string | string[] | undefined
+		? T[K]
+		: InvalidType<K>
 }
 
 export type CreateSearchParams<T extends EnforceStringProperties<T>> = T

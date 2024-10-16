@@ -38,16 +38,25 @@ export const buildSearchParamsMap = (program: ts.Program) => {
 					const declarations = property.getDeclarations()
 					if (!declarations || declarations.length === 0) continue
 
+					const isStringType = (type: ts.Type) =>
+						(type.flags & ts.TypeFlags.String) !== 0
+					const isStringArrayType = (type: ts.Type) => {
+						const indexType = checker.getIndexTypeOfType(
+							type,
+							ts.IndexKind.Number,
+						)
+						return !!(indexType && !!(indexType.flags & ts.TypeFlags.String))
+					}
+
 					const propType = checker.getTypeAtLocation(declarations[0])
 					const isOptional =
 						(property.getFlags() & ts.SymbolFlags.Optional) !== 0
-					const isString = (propType.flags & ts.TypeFlags.String) !== 0
-					const indexType = checker.getIndexTypeOfType(
-						propType,
-						ts.IndexKind.Number,
-					)
-					const isStringArray =
-						indexType && !!(indexType.flags & ts.TypeFlags.String)
+					const isString = propType.isUnion()
+						? propType.types.some(isStringType)
+						: isStringType(propType)
+					const isStringArray = propType.isUnion()
+						? propType.types.some(isStringArrayType)
+						: isStringArrayType(propType)
 
 					// check for string
 					if (isString) {
