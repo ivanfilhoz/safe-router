@@ -15,6 +15,10 @@ export const exampleTree: Tree = {
 				__searchParams: {
 					tab: {
 						type: 'string',
+						optional: false,
+					},
+					page: {
+						type: 'array',
 						optional: true,
 					},
 				},

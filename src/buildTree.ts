@@ -1,8 +1,11 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-import { getSearchParamsFromFile } from './getSearchParamsFromFile'
 
-export function buildTree(dir: string, _type: NodeType = 'static'): Tree {
+export function buildTree(
+	searchParamsMap: SearchParamsMap,
+	dir: string,
+	_type: NodeType = 'static',
+): Tree {
 	const entries = fs.readdirSync(dir, { withFileTypes: true })
 	const tree = {} as Tree
 
@@ -13,9 +16,9 @@ export function buildTree(dir: string, _type: NodeType = 'static'): Tree {
 		) {
 			tree.__type = _type
 
-			const searchParams = getSearchParamsFromFile(path.join(dir, entry.name))
-			if (searchParams) {
-				tree.__searchParams = searchParams
+			const fullPath = path.join(entry.parentPath, entry.name)
+			if (searchParamsMap[fullPath]) {
+				tree.__searchParams = searchParamsMap[fullPath]
 			}
 		}
 
@@ -26,7 +29,7 @@ export function buildTree(dir: string, _type: NodeType = 'static'): Tree {
 			const groupMatch = segment.match(/^\((.+)\)$/)
 
 			if (groupMatch) {
-				Object.assign(tree, buildTree(entryPath, _type))
+				Object.assign(tree, buildTree(searchParamsMap, entryPath, _type))
 				continue
 			}
 
@@ -48,7 +51,7 @@ export function buildTree(dir: string, _type: NodeType = 'static'): Tree {
 				name = dynamicMatch[1]
 			}
 
-			const children = buildTree(entryPath, type)
+			const children = buildTree(searchParamsMap, entryPath, type)
 			if (Object.keys(children).length > 0) {
 				tree[name] = children
 			}

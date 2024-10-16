@@ -1,6 +1,6 @@
 import type { DirectoryItems } from 'mock-fs/lib/filesystem'
 
-export const exampleFs: DirectoryItems = {
+export const exampleFs = {
 	'page.tsx': '',
 	assets: {
 		'img.png': '',
@@ -17,8 +17,10 @@ export const exampleFs: DirectoryItems = {
 			'page.tsx': '',
 			details: {
 				'page.tsx': `
-export type SearchParams = {
-  tab?: string
+import { CreateSearchParams } from 'safe-router/helpers'
+
+type Props = {
+  searchParams: CreateSearchParams<{ tab: string, page?: string[] }>
 }				
 `,
 			},
@@ -35,4 +37,4 @@ export type SearchParams = {
 			'route.ts': '',
 		},
 	},
-}
+} satisfies DirectoryItems

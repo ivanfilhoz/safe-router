@@ -2,6 +2,8 @@ import mock from 'mock-fs'
 import { buildTree } from './buildTree'
 import { exampleFs } from './mocks/fs'
 import { exampleTree } from './mocks/tree'
+import { createMockProgram } from './mocks/program'
+import { buildSearchParamsMap } from './buildSearchParamsMap'
 
 describe('buildTree', () => {
 	afterEach(() => {
@@ -13,7 +15,7 @@ describe('buildTree', () => {
 			'/app': {},
 		})
 
-		const result = buildTree('/app')
+		const result = buildTree({}, '/app')
 		expect(result).toEqual({})
 	})
 
@@ -27,7 +29,7 @@ describe('buildTree', () => {
 			},
 		})
 
-		const result = buildTree('/app')
+		const result = buildTree({}, '/app')
 		expect(result).toEqual({})
 	})
 
@@ -45,11 +47,11 @@ describe('buildTree', () => {
 			},
 		})
 
-		const result = buildTree('/app')
+		const result = buildTree({}, '/app')
 		expect(result).toEqual({
-			_: 'static',
+			__type: 'static',
 			products: {
-				_: 'static',
+				__type: 'static',
 			},
 		})
 	})
@@ -59,7 +61,21 @@ describe('buildTree', () => {
 			'/app': exampleFs,
 		})
 
-		const result = buildTree('/app')
+		const result = buildTree(
+			{
+				'/app/products/[id]/details/page.tsx': {
+					tab: {
+						type: 'string',
+						optional: false,
+					},
+					page: {
+						type: 'array',
+						optional: true,
+					},
+				},
+			},
+			'/app',
+		)
 		expect(result).toEqual(exampleTree)
 	})
 })

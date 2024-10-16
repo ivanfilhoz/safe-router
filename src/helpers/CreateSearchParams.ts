@@ -6,4 +6,4 @@ type EnforceStringProperties<T> = {
 	[K in keyof T]: T[K] extends string | string[] ? T[K] : InvalidType<K>
 }
 
-export type SearchParams<T extends EnforceStringProperties<T>> = T
+export type CreateSearchParams<T extends EnforceStringProperties<T>> = T

@@ -6,6 +6,10 @@ type NodeSearchParams = {
 	}
 }
 
+type SearchParamsMap = {
+	[key: string]: NodeSearchParams
+}
+
 type Tree = {
 	__type?: NodeType
 	__searchParams?: NodeSearchParams

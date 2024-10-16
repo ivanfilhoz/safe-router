@@ -2,9 +2,11 @@ import type ts from 'typescript'
 import { buildTree } from './buildTree'
 import { compileParams } from './compileParams'
 import { compileRoutes } from './compileRoutes'
+import { buildSearchParamsMap } from './buildSearchParamsMap'
 
-export function compile(appDir: string, checker: ts.TypeChecker) {
-	const tree = buildTree(appDir)
+export function compile(program: ts.Program, appDir: string) {
+	const searchParamsMap = buildSearchParamsMap(program)
+	const tree = buildTree(searchParamsMap, appDir)
 	const compiledRoutes = compileRoutes(tree)
 	const compiledParams = compileParams(tree)
 

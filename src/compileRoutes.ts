@@ -1,3 +1,4 @@
+import { getBuildRouteParamsFromNodeSearchParams } from './getBuildRouteParamsFromNodeSearchParams'
 import { getChildrenFromTree } from './getChildrenFromTree'
 import { getDocUrlFromPath } from './getDocUrlFromPath'
 import { getNodeFromPath } from './getNodeFromPath'
@@ -23,11 +24,15 @@ export function compileRoutes(tree: Tree, path: Path = []) {
 	}
 
 	if (node.__type) {
+		const buildRouteParams = getBuildRouteParamsFromNodeSearchParams(
+			node.__searchParams ?? {},
+		)
+
 		result += `
   /**
    * @returns ${getDocUrlFromPath(path)}
    */
-  get: buildRoute(${getRealUrlFromPath(path)}),`
+  get: buildRoute${buildRouteParams}(${getRealUrlFromPath(path)}),`
 	}
 
 	const children = getChildrenFromTree(node)

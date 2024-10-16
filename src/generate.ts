@@ -2,6 +2,7 @@ import { compile } from './compile'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import ts from 'typescript'
+import { buildSearchParamsMap } from './buildSearchParamsMap'
 
 export function generate(
 	info: ts.server.PluginCreateInfo,
@@ -22,8 +23,7 @@ export function generate(
 		return
 	}
 
-	const checker = program.getTypeChecker()
-	const routesFile = compile(appDir, checker)
+	const routesFile = compile(program, appDir)
 
 	fs.mkdirSync(path.dirname(routesFilePath), { recursive: true })
 	fs.writeFileSync(routesFilePath, routesFile, 'utf8')
