@@ -47,6 +47,11 @@ jobs:
 
       - name: Publish to npm
         if: steps.version-check.outputs.bumped == 'true'
-        run: npm publish
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            npm publish
+          elif [ "${{ github.ref }}" == "refs/heads/beta" ]; then
+            npm publish --tag beta
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
