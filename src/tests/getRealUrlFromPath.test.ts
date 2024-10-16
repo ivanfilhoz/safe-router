@@ -1,4 +1,4 @@
-import { getRealUrlFromPath } from './getRealUrlFromPath'
+import { getRealUrlFromPath } from '../service/getRealUrlFromPath'
 
 describe('getRealUrlFromPath', () => {
 	test('should get a static node', () => {

@@ -1,14 +1,14 @@
 {
   "name": "safe-router",
   "description": "⚡️ Type-safe routing for Next.js",
-  "version": "0.4.2",
-  "main": "./dist/index.js",
+  "version": "0.4.3",
+  "main": "./dist/service/index.js",
   "exports": {
-    ".": "./dist/index.js",
+    ".": "./dist/service/index.js",
     "./helpers": "./src/helpers/index.ts"
   },
   "files": [
-    "dist",
+    "dist/service",
     "src/helpers"
   ],
   "scripts": {

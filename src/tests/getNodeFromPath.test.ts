@@ -1,4 +1,4 @@
-import { getNodeFromPath } from './getNodeFromPath'
+import { getNodeFromPath } from '../service/getNodeFromPath'
 
 describe('getNodeFromPath', () => {
 	test('should get a static node', () => {

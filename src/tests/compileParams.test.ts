@@ -1,5 +1,5 @@
-import { compileParams } from './compileParams'
-import { exampleTree } from './mocks/tree'
+import { compileParams } from '../service/compileParams'
+import { exampleTree } from '../mocks/tree'
 
 describe('compileParams', () => {
 	test('should compile a static root tree', () => {

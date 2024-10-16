@@ -1,4 +1,4 @@
-import { getDocUrlFromPath } from './getDocUrlFromPath'
+import { getDocUrlFromPath } from '../service/getDocUrlFromPath'
 
 describe('getDocUrlFromPath', () => {
 	test('should get a static node', () => {

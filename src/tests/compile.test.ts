@@ -1,9 +1,9 @@
 import mock from 'mock-fs'
-import { exampleFs } from './mocks/fs'
+import { exampleFs } from '../mocks/fs'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-import { compile } from './compile'
-import { createMockProgram } from './mocks/program'
+import { compile } from '../service/compile'
+import { createMockProgram } from '../mocks/program'
 
 describe('compile', () => {
 	afterEach(() => {

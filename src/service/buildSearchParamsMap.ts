@@ -58,13 +58,11 @@ export const buildSearchParamsMap = (program: ts.Program) => {
 						? propType.types.some(isStringArrayType)
 						: isStringArrayType(propType)
 
-					// check for string
 					if (isString) {
 						searchParams[property.name] = {
 							type: 'string',
 							optional: isOptional,
 						}
-						// check for string[]
 					} else if (isStringArray) {
 						searchParams[property.name] = {
 							type: 'array',

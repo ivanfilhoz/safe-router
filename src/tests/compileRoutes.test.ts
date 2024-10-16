@@ -1,5 +1,5 @@
-import { compileRoutes } from './compileRoutes'
-import { exampleTree } from './mocks/tree'
+import { compileRoutes } from '../service/compileRoutes'
+import { exampleTree } from '../mocks/tree'
 
 describe('compileRoutes', () => {
 	test('should compile a static root tree', () => {

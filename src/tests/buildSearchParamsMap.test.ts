@@ -1,5 +1,5 @@
-import { buildSearchParamsMap } from './buildSearchParamsMap'
-import { createMockProgram } from './mocks/program'
+import { buildSearchParamsMap } from '../service/buildSearchParamsMap'
+import { createMockProgram } from '../mocks/program'
 
 // Paths to the files
 const routeFileName = 'route.ts'
