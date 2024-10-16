@@ -37,7 +37,16 @@ jobs:
         id: version-check
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          NPM_VERSION=$(npm view $(node -p "require('./package.json').name") version)
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            NPM_VERSION=$(npm view $(node -p "require('./package.json').name") version)
+          elif [ "${{ github.ref }}" == "refs/heads/beta" ]; then
+            NPM_VERSION=$(npm view $(node -p "require('./package.json').name") dist-tags.beta)
+          else
+            echo "This branch is not configured for publishing."
+            echo "bumped=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
           if [ "$VERSION" = "$NPM_VERSION" ]; then
             echo "Version has not been bumped."
             echo "bumped=false" >> $GITHUB_OUTPUT
