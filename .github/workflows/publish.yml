@@ -26,7 +26,12 @@ jobs:
         run: npm run lint
 
       - name: Run tests
-        run: npm test
+        run: npm coverage
+
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Check if version has been bumped
         id: version-check
