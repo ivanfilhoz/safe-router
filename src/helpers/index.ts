@@ -1,2 +1,2 @@
 export * from './buildRoute'
-export type * from './CreateSearchParams'
+export * from './CreateSearchParams'
