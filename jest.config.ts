@@ -6,7 +6,7 @@ module.exports = {
 	testMatch: ['**/*.test.ts'],
 	collectCoverage: true,
 	collectCoverageFrom: ['src/**/*.ts'],
-	watchPathIgnorePatterns: ['<rootDir>/generated/'],
+	watchPathIgnorePatterns: ['<rootDir>/generated/', '<rootDir>/examples/'],
 	moduleNameMapper: {
 		'^safe-router/helpers$': '<rootDir>/src/helpers',
 	},

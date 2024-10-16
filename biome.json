@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": ["dist", "generated", "coverage", ".vscode"]
+		"ignore": ["dist", "generated", "coverage", ".vscode", "examples"]
 	},
 	"formatter": {
 		"enabled": true,
