@@ -3,6 +3,7 @@
 [![NPM Version][npm-image]][npm-url]
 [![Github License][license-image]](LICENSE)
 [![NPM Downloads][downloads-image]][npm-url]
+[![Codecov][codecov-image]][codecov-url]
 
 ⚡️ Automagic type-safe route generation for [Next.js](https://nextjs.org/).
 
@@ -142,3 +143,5 @@ routes.products.id('123').details.get({
 [license-image]: https://img.shields.io/github/license/ivanfilhoz/safe-router.svg
 [downloads-image]: https://img.shields.io/npm/dm/safe-router.svg
 [npm-url]: https://npmjs.org/package/safe-router
+[codecov-image]: https://codecov.io/gh/ivanfilhoz/safe-router/branch/main/graph/badge.svg?token=A1ANWBUXNO
+[codecov-url]: https://codecov.io/gh/ivanfilhoz/safe-router
