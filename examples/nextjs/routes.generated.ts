@@ -47,7 +47,7 @@ export const routes = {
         /**
          * @returns /products/{id}/details
          */
-        get: buildRoute<{ tab: string, page?: string[] }>(`/products/${products_id}/details`),
+        get: buildRoute<{ tab: string }>(`/products/${products_id}/details`),
       },
     }),
   },
