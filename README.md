@@ -13,10 +13,10 @@
 - ✅ Runs as a language service plugin
 - ✅ Watches for changes in the app directory
 - ✅ Supports dynamic and catch-all routes
+- ✅ Supports search parameters (experimental)
 
 ## Goals
 
-- 🚧 Built-in support for query parameters
 - 🚧 Support for pages router
 - 🚧 Support for other frameworks like Remix
 
@@ -97,6 +97,41 @@ type Props = {
 export default function ProductDetailsPage({ params }: Props) {
   return <div>Details for product {params.id}</div>
 }
+```
+
+## Search parameters
+
+Search parameters are supported by using the `CreateSearchParams` type from the `safe-router/helpers` package:
+
+```tsx
+import { RouteParams } from '@/routes.generated'
+import type { CreateSearchParams } from 'safe-router/helpers'
+
+export type Props = {
+  params: RouteParams['products.id.details']
+  searchParams: CreateSearchParams<{ tab: string }>
+}
+
+export default function ProductDetailsPage({ params, searchParams }: Props) {
+  const currentTab = searchParams.tab ?? 'default'
+
+  return (
+    <div>
+      Details for product {params.id}
+
+      Current tab: {currentTab}
+    </div>
+  )
+}
+```
+
+The typed search params will be available as arguments to the `get` method of the route:
+
+```ts
+routes.products.id('123').details.get({
+  tab: 'specs',
+  otherParam: 'hello', // additional params are still supported
+}) // /products/123/details?tab=specs&otherParam=hello
 ```
 
 ## License

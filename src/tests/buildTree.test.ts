@@ -2,8 +2,6 @@ import mock from 'mock-fs'
 import { buildTree } from '../service/buildTree'
 import { exampleFs } from '../mocks/fs'
 import { exampleTree } from '../mocks/tree'
-import { createMockProgram } from '../mocks/program'
-import { buildSearchParamsMap } from '../service/buildSearchParamsMap'
 
 describe('buildTree', () => {
 	afterEach(() => {
