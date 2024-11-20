@@ -1,7 +1,7 @@
 {
   "name": "safe-router",
   "description": "⚡️ Type-safe routing for Next.js",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "main": "./dist/service/index.js",
   "exports": {
     ".": "./dist/service/index.js",
