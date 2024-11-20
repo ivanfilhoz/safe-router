@@ -39,6 +39,9 @@ function init() {
 			}
 		}, 300);
 
+		// Generate the initial routes file on startup
+		throttledGenerate();
+
 		// Watch the app directory for changes using chokidar
 		let watcher: chokidar.FSWatcher;
 		try {
@@ -46,7 +49,7 @@ function init() {
 				persistent: true,
 				depth: 99,
 				followSymlinks: false,
-				ignored: (file, stats) => stats?.isDirectory() || !(file.endsWith('.tsx') || file.endsWith('.ts')),
+				ignored: (file, stats) => !!stats?.isFile() && !(file.endsWith('.tsx') || file.endsWith('.ts'))
 			})
 
 			watcher
@@ -59,7 +62,7 @@ function init() {
 			logger.info(`safe-router: failed to setup chokidar watcher: ${err}`)
 		}
 
-		function fileChanged(filePath: string) {
+		function fileChanged() {
 			throttledGenerate()
 		}
 
