@@ -18,5 +18,5 @@ export const getParamsFromPath = (path: Path) => {
 		.filter(Boolean)
 		.join(', ')
 
-	return params ? `{ ${params} }` : 'object'
+	return params ? `{ ${params} }` : 'never'
 }

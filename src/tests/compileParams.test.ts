@@ -10,7 +10,7 @@ describe('compileParams', () => {
 		const result = compileParams(tree)
 		expect(result).toEqual(
 			`{
-  '.': object
+  '.': never
 }`,
 		)
 	})
@@ -19,14 +19,14 @@ describe('compileParams', () => {
 		const result = compileParams(exampleTree)
 		expect(result).toEqual(
 			`{
-  '.': object
-  'about': object
-  'products': object
-  'products.summary': object
+  '.': never
+  'about': never
+  'products': never
+  'products.summary': never
   'products.id': { id: string }
   'products.id.details': { id: string }
   'hello.params': { params: string[] }
-  'api': object
+  'api': never
   'api.apiRoute': { apiRoute: string[] }
 }`,
 		)

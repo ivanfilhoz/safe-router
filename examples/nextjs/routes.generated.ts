@@ -33,6 +33,18 @@ export const routes = {
       get: buildRoute(`/hello/${hello_params.join('/')}`),
     }),
   },
+  newroute: {
+    /**
+     * @returns /newroute
+     */
+    get: buildRoute('/newroute'),
+    subroute: (newroute_subroute: string) => ({
+      /**
+       * @returns /newroute/{subroute}
+       */
+      get: buildRoute(`/newroute/${newroute_subroute}`),
+    }),
+  },
   products: {
     /**
      * @returns /products
@@ -54,12 +66,14 @@ export const routes = {
 }
 
 export type RouteParams = {
-  '.': {}
-  'about': {}
-  'api': {}
+  '.': never
+  'about': never
+  'api': never
   'api.apiRoute': { apiRoute: string[] }
   'hello.params': { params: string[] }
-  'products': {}
+  'newroute': never
+  'newroute.subroute': { subroute: string }
+  'products': never
   'products.id': { id: string }
   'products.id.details': { id: string }
 }

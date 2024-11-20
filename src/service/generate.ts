@@ -6,13 +6,16 @@ import ts from 'typescript'
 const RETRY_DELAY = 1000
 const MAX_RETRY_COUNT = 10
 
+
 export function generate(
 	info: ts.server.PluginCreateInfo,
 	appDir: string,
 	routesFilePath: string,
 	retryCount = 0,
 ) {
+	const logger = info.project.projectService.logger
 	let program = info.languageService.getProgram()
+	logger.info('safe-router: getting TypeScript program')
 
 	try {
 		if (!program) {
@@ -22,7 +25,7 @@ export function generate(
 			})
 		}
 	} catch (e) {
-		console.error('safe-router: failed to get TypeScript program')
+		logger.info('safe-router: failed to get TypeScript program')
 		return
 	}
 
@@ -32,6 +35,7 @@ export function generate(
 	})
 
 	if (!isReady && retryCount < MAX_RETRY_COUNT) {
+		logger.info( `safe-router: not ready yet, retrying in ${RETRY_DELAY}ms (${retryCount + 1}/${MAX_RETRY_COUNT})`)
 		setTimeout(
 			() => generate(info, appDir, routesFilePath, retryCount + 1),
 			RETRY_DELAY,
@@ -39,10 +43,12 @@ export function generate(
 		return
 	}
 
+	logger.info('safe-router: compiling routes file')
 	const routesFile = compile(program, appDir)
 
+	console.log(routesFile)
 	fs.mkdirSync(path.dirname(routesFilePath), { recursive: true })
 	fs.writeFileSync(routesFilePath, routesFile, 'utf8')
 
-	console.log(`safe-router: generated routes file at ${routesFilePath}`)
+	logger.info(`safe-router: generated routes file at ${routesFilePath}`)
 }

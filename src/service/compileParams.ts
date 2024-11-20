@@ -4,7 +4,7 @@ import { getParamsFromPath } from './getParamsFromPath'
 
 export function compileParams(tree: Tree) {
 	let result = `{
-  '.': object`
+  '.': never`
 
 	const compileSubTree = (path: Path) => {
 		let res = ''
