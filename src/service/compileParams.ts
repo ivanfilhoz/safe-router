@@ -1,11 +1,10 @@
 import { getChildrenFromTree } from './getChildrenFromTree'
 import { getNodeFromPath } from './getNodeFromPath'
 import { getParamsFromPath } from './getParamsFromPath'
-import { indent } from './indent'
 
 export function compileParams(tree: Tree) {
 	let result = `{
-  '.': {}`
+  '.': object`
 
 	const compileSubTree = (path: Path) => {
 		let res = ''
