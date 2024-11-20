@@ -1,4 +1,3 @@
-import * as chokidar from 'chokidar'
 import * as path from 'node:path'
 import type ts from 'typescript'
 import { generate } from './generate'
@@ -28,8 +27,8 @@ function init() {
 			return info.languageService;
 		}
 
-		logger.info(`Starting safe-router plugin at ${appDir}`)
-		logger.info(`Using routes file at ${routesFilePath}`)
+		logger.info(`safe-router: watching directory: ${appDir}`);
+    logger.info(`safe-router: routes file will be generated at ${routesFilePath}`);
 
 		const throttledGenerate = throttle(() => {
 			try {
@@ -42,42 +41,22 @@ function init() {
 		// Generate the initial routes file on startup
 		throttledGenerate();
 
-		// Watch the app directory for changes using chokidar
-		let watcher: chokidar.FSWatcher;
-		try {
-			watcher = chokidar.watch(appDir, {
-				persistent: true,
-				depth: 99,
-				followSymlinks: false,
-				ignored: (file, stats) => !!stats?.isFile() && !(file.endsWith('.tsx') || file.endsWith('.ts'))
-			})
+		// Use TypeScript's built-in directory watcher
+    const directoryWatcher = info.serverHost.watchDirectory(
+      appDir,
+      (filePath) => {
+        logger.info(`safe-router: detected change in ${filePath}`);
+				throttledGenerate();
+      },
+      true,
+    );
 
-			watcher
-				.on('add', fileChanged)
-				.on('change', fileChanged)
-				.on('unlink', fileChanged)
-				.on('addDir', fileChanged)
-				.on('unlinkDir', fileChanged)
-		} catch (err) {
-			logger.info(`safe-router: failed to setup chokidar watcher: ${err}`)
-		}
-
-		function fileChanged() {
-			throttledGenerate()
-		}
-
-		// Cleanup logic on process exit
     const cleanup = () => {
       logger.info('safe-router: shutting down and cleaning up...');
-      if (watcher) {
-        watcher.close().catch(err => {
-          logger.info(`safe-router: error closing watcher: ${err}`);
-        });
-      }
+      directoryWatcher.close();
     };
 
     process.on('exit', cleanup);
-    // Handle other termination signals
     process.on('SIGINT', cleanup);
     process.on('SIGTERM', cleanup);
     process.on('uncaughtException', (err) => {

@@ -1,7 +1,7 @@
 {
   "name": "safe-router",
   "description": "⚡️ Type-safe routing for Next.js",
-  "version": "0.4.13",
+  "version": "0.4.14",
   "main": "./dist/service/index.js",
   "exports": {
     ".": "./dist/service/index.js",
@@ -29,9 +29,6 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
-  },
-  "dependencies": {
-    "chokidar": "^4.0.1"
   },
   "peerDependencies": {
     "next": ">=12.0.0",
