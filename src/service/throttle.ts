@@ -1,10 +1,12 @@
-export function throttle(func: (...args: any[]) => void, limit: number) {
+export const throttle = (func: (...args: unknown[]) => void, limit: number) => {
   let inThrottle: boolean;
-  return function(...args: any[]) {
+  return (...args: unknown[]) => {
     if (!inThrottle) {
       func(...args);
       inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      setTimeout(() => {
+        inThrottle = false
+      }, limit);
     }
   };
 }
