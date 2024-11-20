@@ -45,6 +45,8 @@ function init() {
 			watcher = chokidar.watch(appDir, {
 				persistent: true,
 				depth: 99,
+				followSymlinks: false,
+				ignored: (file, stats) => stats?.isDirectory() || !(file.endsWith('.tsx') || file.endsWith('.ts')),
 			})
 
 			watcher
@@ -58,9 +60,7 @@ function init() {
 		}
 
 		function fileChanged(filePath: string) {
-			if (filePath.endsWith('.tsx') || filePath.endsWith('.ts')) {
-				throttledGenerate()
-			}
+			throttledGenerate()
 		}
 
 		// Cleanup logic on process exit
