@@ -46,7 +46,6 @@ export function generate(
 	logger.info('safe-router: compiling routes file')
 	const routesFile = compile(program, appDir)
 
-	console.log(routesFile)
 	fs.mkdirSync(path.dirname(routesFilePath), { recursive: true })
 	fs.writeFileSync(routesFilePath, routesFile, 'utf8')
 
